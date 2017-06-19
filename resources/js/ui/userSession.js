@@ -2,7 +2,7 @@ var _user = '';
 
 function login()
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'login',
@@ -41,7 +41,7 @@ function login()
 
 function logout()
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'logout',

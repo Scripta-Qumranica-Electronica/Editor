@@ -59,7 +59,7 @@ function saveMarkup()
 {
 	const markupText = getInputText();
 	var contributionId;
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'saveMarkup',
@@ -83,7 +83,7 @@ function saveMarkup()
 		console.log('-------------');
 	}
 	
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'saveSigns',

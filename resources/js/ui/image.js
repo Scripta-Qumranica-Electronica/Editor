@@ -152,7 +152,7 @@ function addIIIFImage()
 		return;
 	}
 	
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'getManifest',

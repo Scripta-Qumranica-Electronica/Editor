@@ -10,7 +10,7 @@ function warnBeforeContributionDeletion(index)
 
 function deleteContribution(id)
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'deleteContribution',
@@ -99,7 +99,7 @@ function showContribution(contribution)
 
 function showPreviousContributions()
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'getAllContributions',

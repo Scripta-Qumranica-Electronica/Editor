@@ -1,6 +1,6 @@
 function showResults() // TODO tooltips for letters
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'getAllResults',

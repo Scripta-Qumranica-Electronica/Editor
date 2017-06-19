@@ -27,7 +27,7 @@ function showComment(author, text, time)
 
 function showPreviousComments()
 {
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'getAllComments'
@@ -61,7 +61,7 @@ function saveComment()
 		return;
 	}
 	
-	requestFromServer
+	Spider.requestFromServer
 	(
 		{
 			'request': 'saveComment',
