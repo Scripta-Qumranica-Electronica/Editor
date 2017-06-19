@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="UTF-8">
+	
+	<title>Comfy editor prototype</title>
+	
+	<link rel="stylesheet"
+		  href="css/comfyEditor.css">
+	
+	<script type="text/javascript"
+			src="vendors/jQuery/jquery-3.2.0.min.js"></script>
+	
+	<script type="text/javascript"
+			src="vendors/contextMenu/contextMenu.js"></script>
+	
+	<script type="text/javascript"
+			src="js/server.js"></script>
+			
+	<script type="text/javascript"
+			src="js/parser.js"></script>
+			
+	<script type="text/javascript"
+			src="js/helpers/imageMap.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/tabbing.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/contribution.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/controlPanel.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/discussion.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/image.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/markupInput.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/markupOverview.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/preview.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/quickMarkup.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/result.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/richTextEditor.js"></script>
+
+	<script type="text/javascript"
+			src="js/ui/singleSignEditor.js"></script>
+	
+	<script type="text/javascript"
+			src="js/ui/transformation.js"></script>
+
+	<script type="text/javascript"
+			src="js/ui/userSession.js"></script>
+
+	<script type="text/javascript"
+			src="js/editor.js"></script>
+		
+</head>
+
+<body>
+
+<div id="container">
+
+	<div id="controlPanel">
+	
+		<button id="controlPanelToggleButton">&lt;</button>
+		
+		<br><br>
+		
+		<div id="userPanel">
+		
+			<span id="currentUser">Not logged in.</span>
+			
+			<br>
+			
+			<span id="changeUser"
+				  class="clickableText">Login</span>
+			
+			<span id="logout"
+				  class="hidden clickableText">Logout</span>
+			
+			<div id="changeUserPanel"
+				 class="hidden">
+			
+				<p>
+				
+					<input id="userName"
+						   type="text"
+						   placeholder="User name">
+						   
+				</p>
+					
+				<p>
+				   
+					<input id="userPassword"
+						   type="password"
+						   placeholder="Password">
+						   
+				</p>
+				
+				<p>
+				
+					<button id="confirmUserChange">Ok</button>
+					
+					<button id="cancelUserChange">Cancel</button>
+				
+				</p>
+				
+			</div>
+			
+		</div>
+		 
+		<div id="quickMarkupPanel">
+		 
+			<p>Quick markups</p>
+			
+			<p id="manageQMText">Manage quick markups</p>
+			
+			<p><button id="newQuickMarkupButton">New quick markup</button></p>
+			
+			<p>
+			
+				<input id="newQMNameField"
+					   type="text"
+					   class="hidden"
+					   placeholder="Its name">
+			
+			</p>
+			
+			<p>
+			
+				<input id="newQMCodeField"
+					   type="text"
+					   class="hidden"
+					   placeholder="Its code, e.g. /vacat<>">
+			
+			</p>
+			
+			<p>
+				
+				<button id="confirmNewQMButton"
+						class="hidden">Ok</button>
+				
+				<button id="cancelNewQMButton"
+						class="hidden">Cancel</button>
+			
+			</p>
+			
+		 	<p>
+		 		
+		 		<button id="removeQuickMarkupButton">Toggle removal</button>
+		 	
+		 	</p>
+		 	
+		 </div>
+
+	</div>
+	
+	<div id="LeftPanel"
+		 class="mainPanel">
+		
+		<div id="LeftTabsContainer"
+			 class="tabs">
+		
+		</div>
+	
+	</div>
+	
+	<div id="RightPanel"
+		 class="mainPanel">
+		 
+		<div id="RightTabsContainer"
+			 class="tabs">
+		
+		</div>
+
+	</div>
+	
+	<div id="hidePanel"
+		 class="hidden">
+		 
+		<div id ="ImagePanel"
+			 class="frame">
+			 
+			<div id="imageField"
+				 class="bordered scrollable">
+				
+				<div id="imageSelection">
+				
+					<p>
+					
+						<input id="iiifNumber"
+							   class="indented"
+							   placeholder="E.g. 16580 or DSS12975">
+						
+						from IAA IIIF server
+							   
+					</p>
+				
+					<p>
+				
+						<input id="bNumber"
+							   class="indented"
+							   placeholder="E.g. 483845 or B-496339">
+							   
+						from IAA via B number
+							   
+					</p>
+					
+					<p>
+					
+						<input id="localImage"
+							   class="indented"
+							   placeholder="E.g. example1.png">
+						
+						from local file system
+						
+					</p>
+					
+					<p>
+					
+						<button id="confirmImageSelectionButton"
+								class="indented">
+							
+							Ok
+							
+						</button>
+					
+						<button id="cancelImageSelectionButton">Cancel</button>
+						   
+					</p>
+					
+				</div>
+				
+				<div>
+					
+					<img id="imageDisplay"
+						 > <!--   class="centered"-->
+				
+				</div>
+				
+			</div>
+			
+			<div id="imageControls"
+				 class="hidden">
+			
+				<button id="otherImageButton">Change image</button>
+				
+				<button id="zoomOutButton">-</button>
+				
+				<span id="zoomFactor">100%</span>
+				
+				<button id="zoomInButton">+</button>
+				
+				<button id="contrastButton"
+						title="300% contrast">C</button>
+				
+				<button id="grayscaleButton"
+						title="Turn into grayscale">G</button>
+				
+				<button id="hueRotate90Button"
+						title="Hue rotate by 90°">H9</button>
+					
+				<button id="hueRotate180Button"
+						title="Hue rotate by 180°">H18</button>
+				
+				<button id="hueRotate270Button"
+						title="Hue rotate by 270°">H27</button>
+				
+				<button id="invertButton"
+						title="Invert image">I</button>
+				
+				<button id="saturationButton"
+						title="300% saturation">S</button>
+				
+			</div>
+			
+		</div>
+		
+		<div id="InputPanel"
+			 class="frame">
+		
+			<div class="bordered padded headline">Text with markup, e.g. לטעך</div>
+			
+			<div class="scrollable">
+			
+				<textarea id="inputField"
+						  class="borderedButTop protectedLineBreaks textField"
+						  wrap="hard"
+						  dir="rtl"
+						  autofocus></textarea>
+			
+			</div>
+			
+			<button id="showPreviewButton">Show preview</button>
+			
+			<span id="loginBeforeSaving">Please log in to save to the database.</span>
+			
+			<button id="saveButton"
+					class="hidden">Save to database</button>
+			
+			<div id="textPosition">Ln 1, Col 1</div>
+			
+		</div>
+		
+		<div id="PreviewPanel"
+			 class="frame">
+		
+			<div class="bordered padded headline">Text preview</div>
+		
+			<div id="previewLinesWrapper"
+				 class="scrollable borderedButTop padded textLinesWrapper"
+				 dir="rtl">
+			
+			</div>
+		
+		</div>
+		
+		<div id="OverviewPanel"
+			 class="frame">
+			 
+			<div class="bordered padded headline">Markup overview</div>
+			
+			<div id="markupOverview"
+				 class="scrollable contentField">
+				 
+				 Current markup: <span class="clickableText">SQE predefined</span>
+				 
+				<hr class="discreetLine">
+				
+				<input id="searchcontentField"
+					   type="text"
+					   class="greyBordered markupSearch"
+					   placeholder="Markup or description">
+					 
+				<button id="searchMarkupButton">Search</button>
+			
+			</div>
+			
+		</div>
+		
+		<div id="DiscussionPanel"
+			 class="frame">
+		
+			<div class="bordered padded headline">Markup discussion</div>
+			
+			<div id="markupDiscussion"
+				 class="scrollable contentField">
+				 
+				 Feel free to discuss the markup or editor.
+				 <hr class="discreetLine">
+				 
+				 <textarea id="commentBox"
+				 		   class="protectedLineBreaks"
+				 		   placeholder="Enter your new comment here."></textarea>
+				 
+				 <button id="sendComment"
+				 		 class="hidden">Send</button>
+				 		 
+				 <span id="loginBeforeCommenting">Please log in to write comments.</span>
+				 
+			</div>
+		
+		</div>
+		
+		<div id="ContributionsPanel"
+			 class="frame">
+		
+			<div class="bordered padded headline">My contributions</div>
+			
+			<div id="contributionsList"
+				 class="scrollable contentField">
+				 
+				<span id="contributionsOnlyWhenLoggedIn">You have to log in to see your contributions.</span>
+				
+			</div>
+		
+		</div>
+		
+		<span id="noContributionsYet">There are no contributions saved from you yet. You can add one in the Input tab, with the 'Save to database' button.</span>
+				
+		<div id="ResultsPanel"
+			 class="frame">
+			 
+			<div class="bordered padded headline">Results of my contributions</div>
+			
+			<div id="resultsContainer"
+				 class="contentField">
+			
+				<span id="resultsOnlyWhenLoggedIn">You have to log in to see the results of your contributions.</span>
+			
+				<div id="resultLinesWrapper"
+					 class="scrollable padded textLinesWrapper"
+					 dir="rtl">
+					
+				</div>
+
+			</div>
+			
+		</div>
+		
+		<div id="WysiwygPanel"
+			 class="frame">
+			 
+			<div class="bordered padded headline">Virtual scroll text editor</div>
+			
+			<div id="wysiwygContainer"
+				 class="scrollable protectedLineBreaks contentField"
+				 dir="rtl"></div>
+			
+		</div>
+		
+		<div id="singleSignContainer"
+			 class="scrollable contentField">
+			
+			<div id="signAndAlternatives"></div>
+			
+			<button id="closeSingleSignViewButton">Done</button>
+			
+		</div>
+		
+		<div id="TPanel"
+			 class="frame">
+			
+			<div class="bordered padded headline">Markup transformator</div>
+			
+			<div class="scrollable">
+			
+				<textarea id="transformationField"
+						  class="borderedButTop protectedLineBreaks textField"
+						  wrap="hard"
+						  dir="rtl"></textarea>
+			
+			</div>
+			
+			<button id="transformationButton">Transform</button>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+</body>
+
+</html>

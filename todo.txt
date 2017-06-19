@@ -1,0 +1,124 @@
+= strukturüberarbeitung
+
+zugunsten des richtext editors auflösen
+* result.js 
+* preview.js
+
+demnächst obsolet
+* contribution.js
+
+
+= generell
+
+KURZFRISTIGES
+Laden der Zeichen des Nutzers
+Elemente nur sichtbar wenn eingeloggt
+nutzerfreundliche Auswahl eines UG Bildes
+
+MITTELFRISTIGES
+nutzerfreundliche fehlerbehandlung
+gwdg-zertifikat
+bildmanipulation von mirador übernehmen?
+
+INTERAKTION
+rechtsklick auf eingabefeld öffnet kontextmenü zum einfügen von markups
+bei numerierungspalte kontextmenü (wechsel rechts / links => position & border & textausrichtung anpassen)
+* alternativ drag & drop
+mouseover bei / klick auf markupname (popup?)
+zoom mit mausrad (maus von norbert borgen / selbst mitbringen)
+
+DARSTELLUNG
+logos der partner (u.a. eintrag logo im manifest)
+mehr platz für bilder
+flexible trennlinie zwischen beiden seiten
+aktuelle zeile möglicherweise einfärben
+scrollposition & cursorposition bei eingabe und preview etwa gleich
+bei änderung der fenstergröße höhen der frames anpassen
+
+LTR & RTL
+ltr hilfen
+* https://en.wikipedia.org/wiki/Left-to-right_mark &#8206; or &lrm;
+* https://en.wikipedia.org/wiki/Right-to-left_mark &#8207; or &rlm;
+RTL als hauptrichtung reicht?
+bidi-override reicht nicht
+ggf. key zum umschalten, hebräischer buchstabe?
+ansatz bei office etc.?
+komplett manuell?
+abschnitte innerhalb der textarea mit verschiedenen settings, automatisch angelegt bei hebräischen zeichen / anderen?
+
+ZUKÜNFTIGES
+user bleibt auch bei refresh eingeloggt
+session id statt _user übertragen
+weitergehende infos von iiif laden: label, width, height, metadata hash, (format)
+liste verfügbarer bilder
+neue tags
+* ligatur
+* rotation (winkel als parameter)
+vernünftige default quick markups
+häufigste markups des nutzers als quick anbieten (mag mit aktuellen prioritäten kollidieren)
+tastenkombination für quick markup & anderes markup
+markup overview aus der db
+markupsprache wechseln (vor der sitzung; während der sitzung bräuchte änderung des eingabetextes)
+zusammengehörige klammern markieren
+markierung bei fehler, wo der parser hängt
+echtzeitänderung im preview-fenster (nach ~1s tippstopp)
+export des previews: clipboard, textdatei, grafik etc.
+Möglichkeit zum Ausdrucken einer virtuellen Schriftrolle
+
+
+= wysiwyg
+
+manuscript not relevant because identical to open virtual scroll?
+
+saving
+* build model from existing text
+ * after each change?
+ * focus on actually focused element
+ * maybe use DOM information to track original and modified states
+* diff with current state (to be loaded from db)
+
+context menu on right click
+* in general: everything that cant be written directly
+* applies to all signs of selection
+* menu entries
+ * open sign editor (for first (last?) sign of selection)
+ * superscript
+ * subscript
+ * retraced
+ * reconstructed
+ * corrected (sub entries for details)
+ * suggested
+ * comment
+ * ...
+* remove line
+* remove entire fragment
+
+only via sign editor
+* alternatives
+* vocalization
+ 
+enter sign editor
+* context menu
+* double-click (marks surrounding signs => TODO replace)
+* TODO
+
+text modifications
+* insert line: return key
+ * moves text behind cursor pos to a new, following line
+ * for previous line X (e.g. X = '5') new line has name Xa (Xb etc.), e.g. 5a (?)
+* remove line: via context menu only (rare use case)
+* moving via clipboard / text drag & drop TODO
+
+editable parts
+* fragment name
+* line numbering
+
+togglable markers for
+* user's changes
+* no connection to regions
+* ...
+
+user options
+* font size (rather: multiplier on existing sizes)
+ 
+column divs?
