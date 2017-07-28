@@ -4,36 +4,35 @@ zugunsten des richtext editors auflösen
 * result.js 
 * preview.js
 
-demnächst obsolet
+deutlich ändern
 * contribution.js
 
 
 = generell
 
 KURZFRISTIGES
-Laden der Zeichen des Nutzers
+Speichern & Laden der Zeichen des Nutzers
 Elemente nur sichtbar wenn eingeloggt
-nutzerfreundliche Auswahl eines UG Bildes
 
 MITTELFRISTIGES
 nutzerfreundliche fehlerbehandlung
 gwdg-zertifikat
+nutzerfreundliche Auswahl eines UG Bildes
 bildmanipulation von mirador übernehmen?
 
 INTERAKTION
 rechtsklick auf eingabefeld öffnet kontextmenü zum einfügen von markups
 bei numerierungspalte kontextmenü (wechsel rechts / links => position & border & textausrichtung anpassen)
-* alternativ drag & drop
+* alternativ drag & drop / button um zwischen beiden positionen zu wechseln
 mouseover bei / klick auf markupname (popup?)
-zoom mit mausrad (maus von norbert borgen / selbst mitbringen)
+zoom mit mausrad
 
 DARSTELLUNG
 logos der partner (u.a. eintrag logo im manifest)
 mehr platz für bilder
-flexible trennlinie zwischen beiden seiten
+flexible trennlinie zwischen beiden seiten (überflüssig nach kombination der tools)
 aktuelle zeile möglicherweise einfärben
 scrollposition & cursorposition bei eingabe und preview etwa gleich
-bei änderung der fenstergröße höhen der frames anpassen
 
 LTR & RTL
 ltr hilfen
@@ -47,7 +46,6 @@ komplett manuell?
 abschnitte innerhalb der textarea mit verschiedenen settings, automatisch angelegt bei hebräischen zeichen / anderen?
 
 ZUKÜNFTIGES
-user bleibt auch bei refresh eingeloggt
 session id statt _user übertragen
 weitergehende infos von iiif laden: label, width, height, metadata hash, (format)
 liste verfügbarer bilder
@@ -66,9 +64,14 @@ export des previews: clipboard, textdatei, grafik etc.
 Möglichkeit zum Ausdrucken einer virtuellen Schriftrolle
 
 
-= wysiwyg
+= rich text editor
 
-manuscript not relevant because identical to open virtual scroll?
+get manuscript from other components
+
+typical wysiwyg top menu
+* apply common markup to 1+ sign, with a click
+* remove it the same way
+* if selection does already partially contain markup, apply markup to whole selection
 
 saving
 * build model from existing text
@@ -76,6 +79,8 @@ saving
  * focus on actually focused element
  * maybe use DOM information to track original and modified states
 * diff with current state (to be loaded from db)
+ * has to be done for parser also => do it in perl
+  * that also acknowledges recent db changes by other sources
 
 context menu on right click
 * in general: everything that cant be written directly
@@ -122,3 +127,12 @@ user options
 * font size (rather: multiplier on existing sizes)
  
 column divs?
+
+
+= message spider
+
+editor pulls from scrollery 
+* virtual scroll name & id
+
+editor pushes to scrollery
+* text changes

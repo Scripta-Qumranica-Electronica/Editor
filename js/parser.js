@@ -705,7 +705,7 @@ function definePatterns()
 			{
 				'type': 'modification',
 				'scope': 'single sign',
-				'application': 'retroactive', // TODO gets lost after adding? works for example
+				'application': 'retroactive',
 				'modification': 'damaged',
 				'detail': 'clear'
 			}
@@ -718,7 +718,7 @@ function definePatterns()
 			{
 				'type': 'modification',
 				'scope': 'single sign',
-				'application': 'retroactive', // TODO gets lost after adding
+				'application': 'retroactive',
 				'modification': 'damaged',
 				'detail': 'ambiguous'
 			}
@@ -1001,7 +1001,7 @@ function definePatterns()
 	 		],
 	 		{
 	 			'type': 'modification',
-	 			'application': 'retroactive', // TODO gets lost after adding
+	 			'application': 'retroactive',
 	 			'modification': 'comment',
 	 			'detail': '§this.comment'
 	 		}
@@ -1269,13 +1269,16 @@ function rememberModification(result, line)
 {
 	if (result.application == 'retroactive')
 	{
+		console.log('result.modification ' + result.modification);
+		console.log('result.detail ' + result.detail);
+		
 		if (alternatives.length > 0) // alternative in the making
 		{
 			alternatives[alternatives.length - 1][result.modification] = result.detail;
 		}
 		else if (line.length > 0) // already 1+ built sign
 		{
-			line[line.length - 1][result.modification] = result.detail;
+			line[line.length - 1][0][result.modification] = result.detail;
 		}
 		
 		console.log('line[line.length - 1][result.modification] ' + line[line.length - 1][result.modification]);
@@ -1582,6 +1585,6 @@ function parse(markupText)
 			incrementLineNumber();
 		}
 	}
-	
+
 	return [lineNumbers, lines];
 }

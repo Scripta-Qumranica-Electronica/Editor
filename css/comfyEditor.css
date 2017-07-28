@@ -55,10 +55,19 @@
 	border-bottom: 1px dotted gray;
 }
 
+.fillingMostHeight
+{
+	height: calc(100vh - 110px);
+}
+
+.fillingMostHeightNoHeadline
+{
+	height: calc(100vh - 69px); /** fillingMostHeight +20 removed headline's height +2*5 its padding +1 border +10 ??? */
+}
+
 .contentField
 {
 	width: calc(100% - 12px); /* -2*5 padding -2*1 border */
-	height: 300px;
 	
 	border-top: 0px;
 	border-right: 1px solid black;
@@ -315,7 +324,7 @@
 }
 
 
-/** wysiwyg editor */
+/** rich text editor */
 
 .manuscriptName
 {
@@ -358,17 +367,7 @@
 	border-bottom: 1px solid darkgrey;
 }
 
-.wysiwygTextLineNumber
-{
-	/* display: table-cell; */
-}
-
-.sign
-{
-	
-}
-
-#wysiwygContainer
+#richTextContainer
 {
 	table-layout: auto;
 	

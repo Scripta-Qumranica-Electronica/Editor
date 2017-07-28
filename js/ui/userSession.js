@@ -11,7 +11,7 @@ function login()
 		},
 		function(data)
 		{
-			if (data == 1)
+			if (data != null && data != 0)
 			{
 				_user = $('#userName').val();
 				

@@ -192,3 +192,30 @@ function showResults() // TODO tooltips for letters
 		}
 	);
 }
+
+function initLoad()
+{
+	$('#confirmLoad').click(function()
+	{
+		const scroll = $('#scrollChoice').val();
+		const column = $('#columnChoice').val();
+		
+		Spider.requestFromServer
+		(
+			{
+				'request': 'load',
+				'scroll' : scroll,
+				'column' : column
+			},
+			function(data)
+			{
+				if (data == 0)
+				{
+					return;
+				}
+				
+				Spider.notifyChangedText(JSON.parse(data));
+			}
+		);
+	});
+}

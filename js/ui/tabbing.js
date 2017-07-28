@@ -62,9 +62,9 @@ function initTabs()
 	 	'Overview',
 	 	'Discussion',
 	 	'Contributions',
-	 	'Results',
+	 	'Load',
 	 	
-	 	'Wysiwyg',
+	 	'RichText',
 	 	'T'
 	];
 	for (var i in tabNames)

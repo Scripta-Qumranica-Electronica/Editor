@@ -201,7 +201,7 @@
 			 class="frame">
 			 
 			<div id="imageField"
-				 class="bordered scrollable">
+				 class="bordered scrollable fillingMostHeightNoHeadline">
 				
 				<div id="imageSelection">
 				
@@ -303,7 +303,7 @@
 			<div class="scrollable">
 			
 				<textarea id="inputField"
-						  class="borderedButTop protectedLineBreaks textField"
+						  class="borderedButTop protectedLineBreaks fillingMostHeight textField"
 						  wrap="hard"
 						  dir="rtl"
 						  autofocus></textarea>
@@ -327,7 +327,7 @@
 			<div class="bordered padded headline">Text preview</div>
 		
 			<div id="previewLinesWrapper"
-				 class="scrollable borderedButTop padded textLinesWrapper"
+				 class="scrollable borderedButTop padded fillingMostHeight textLinesWrapper"
 				 dir="rtl">
 			
 			</div>
@@ -340,7 +340,7 @@
 			<div class="bordered padded headline">Markup overview</div>
 			
 			<div id="markupOverview"
-				 class="scrollable contentField">
+				 class="scrollable fillingMostHeight contentField">
 				 
 				 Current markup: <span class="clickableText">SQE predefined</span>
 				 
@@ -363,7 +363,7 @@
 			<div class="bordered padded headline">Markup discussion</div>
 			
 			<div id="markupDiscussion"
-				 class="scrollable contentField">
+				 class="scrollable fillingMostHeight contentField">
 				 
 				 Feel free to discuss the markup or editor.
 				 <hr class="discreetLine">
@@ -387,7 +387,7 @@
 			<div class="bordered padded headline">My contributions</div>
 			
 			<div id="contributionsList"
-				 class="scrollable contentField">
+				 class="scrollable fillingMostHeight contentField">
 				 
 				<span id="contributionsOnlyWhenLoggedIn">You have to log in to see your contributions.</span>
 				
@@ -397,39 +397,47 @@
 		
 		<span id="noContributionsYet">There are no contributions saved from you yet. You can add one in the Input tab, with the 'Save to database' button.</span>
 				
-		<div id="ResultsPanel"
+		<div id="LoadPanel"
 			 class="frame">
 			 
-			<div class="bordered padded headline">Results of my contributions</div>
+			<div class="bordered padded headline">Load existing texts</div>
 			
-			<div id="resultsContainer"
-				 class="contentField">
-			
-				<span id="resultsOnlyWhenLoggedIn">You have to log in to see the results of your contributions.</span>
-			
-				<div id="resultLinesWrapper"
-					 class="scrollable padded textLinesWrapper"
-					 dir="rtl">
-					
-				</div>
-
+			<div id="loadContainer"
+				 class="fillingMostHeight contentField">
+				
+				<input id="scrollChoice"
+					   placeholder="E.g. 1QS">
+					   
+				Scroll
+				
+				<br>
+				
+				<input id="columnChoice"
+					   placeholder="E.g. 3 or frg. 28">
+				
+				Column / fragment 
+				
+				<br>
+				
+				<button id="confirmLoad">Ok</button>
+				
 			</div>
 			
 		</div>
 		
-		<div id="WysiwygPanel"
+		<div id="RichTextPanel"
 			 class="frame">
 			 
 			<div class="bordered padded headline">Virtual scroll text editor</div>
 			
-			<div id="wysiwygContainer"
-				 class="scrollable protectedLineBreaks contentField"
+			<div id="richTextContainer"
+				 class="scrollable protectedLineBreaks fillingMostHeight contentField"
 				 dir="rtl"></div>
 			
 		</div>
 		
 		<div id="singleSignContainer"
-			 class="scrollable contentField">
+			 class="scrollable fillingMostHeight contentField">
 			
 			<div id="signAndAlternatives"></div>
 			
@@ -445,7 +453,7 @@
 			<div class="scrollable">
 			
 				<textarea id="transformationField"
-						  class="borderedButTop protectedLineBreaks textField"
+						  class="borderedButTop protectedLineBreaks fillingMostHeight textField"
 						  wrap="hard"
 						  dir="rtl"></textarea>
 			

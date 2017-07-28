@@ -8,26 +8,29 @@ function Spider() // singleton central component communication system
     this.doShowServerErrors = true;
 }
 
-Spider.prototype.requestFromServer = function(parameters, onSuccess)
+Spider.prototype.requestFromServer = function(parameters, onReturn)
 {
+	console.log('before request ' + new Date().getTime());
 	parameters['timeStamp'] = Date.now(); // TODO replace now() entries in DB bei this time, retry connection regularly
 	
 	$.post
 	(
-		'cgi-bin/server.pl', // connection to perl works only if same server ('same origin')
+		'cgi/server.pl', // connection to perl works only if same server ('same origin')
 		parameters
 	)
 	.done
 	(
 		function(data)
 		{
-			console.log('success at ' + parameters['request'] + ':');
+			console.log('response on ' + parameters['request'] + ':');
 			console.log(data);
 			
-			if (onSuccess != null)
+			if (onReturn != null)
 			{
-				onSuccess(data);
+				onReturn(data);
 			}
+			
+			console.log('after request ' + new Date().getTime());
 		}
 	)
 	.fail
@@ -43,9 +46,21 @@ Spider.prototype.requestFromServer = function(parameters, onSuccess)
 	);
 }
 
-Spider.prototype.doShowServerErrors = function(doShowServerErrors)
+Spider.prototype.getShowServerErrors = function()
+{
+	return this.doShowServerErrors;
+}
+
+Spider.prototype.setShowServerErrors = function(doShowServerErrors)
 {
 	this.doShowServerErrors = doShowServerErrors;
+}
+
+Spider.prototype.notifyChangedText = function(textObject)
+{
+	this.textObject = textObject;
+	
+	displayModel2(textObject);
 }
 
 var Spider = new Spider();

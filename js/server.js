@@ -4,7 +4,7 @@ function initServerConnection()
 	(
 		function(event, request, settings)
 		{
-			if (_showServerErrors)
+			if (Spider.getShowServerErrors())
 			{
 				console.log('Connection error');
 				console.log('* target: ' + settings.url);

@@ -82,7 +82,7 @@ function saveMarkup()
 		}
 		console.log('-------------');
 	}
-	
+
 	Spider.requestFromServer
 	(
 		{

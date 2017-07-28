@@ -1,24 +1,21 @@
-// TODO better name space in CSS (less 'wysiwyg')
-
 function addFragmentName(name)
 {
 	$('<span></span>') // TODO id?
 	.attr('contentEditable', 'true') // TODO worth the trouble?
 	.addClass('fragmentName')
 	.text(name)
-	.appendTo('#wysiwygContainer');
+	.appendTo('#richTextContainer');
 }
 
-function addWysiwygLine(number) // TODO name
+function addTextLine(number)
 {
 	const line =
 	$('<tr></tr>')
 	.addClass('line')
-	.appendTo('#wysiwygContainer');
+	.appendTo('#richTextContainer');
 	
 	$('<td></td>')
 	.attr('id', 'lineNumber' + number)
-	.addClass('wysiwygTextLineNumber')
 	.text(number)
 	.appendTo(line);
 
@@ -52,7 +49,7 @@ function addSign(sign, attributes, lineNumber, iAlternative, iSign)
 	const classList = [];
 	
 	/** TODO remaining attributes
-	 * alternative (6.1, 7, 9)	-> TODO written behind each other? just mark signs with alternatives?
+	 * alternative (6.1, 7, 9)	-> TODO mark signs with alternatives
 	 * vocalization (8)			-> TODO
 	 */
 	
@@ -76,13 +73,27 @@ function addSign(sign, attributes, lineNumber, iAlternative, iSign)
 		sign = _signType2Visualisation[attributes['signType']];
 		if (sign == null)
 		{
+			return; // skip breaks
+		}
+		
+		if (sign == null) // unknown sign type
+		{
 			sign = '?';
 		}
 		else
 		{
 			span.attr('title', 'Sign type: ' + attributes['signType']); // tooltip			
 			
-			if (attributes['width'] != null) // TODO get rid of fractional width?
+			if (attributes['width'] == null)
+			{
+				span
+				.text(sign)
+				.css
+				({
+					'font-size': '14px'
+				});
+			}
+			else
 			{
 				var markers = sign;
 				for (var iSpace = 1; iSpace < Math.floor(attributes['width']); iSpace++)
@@ -110,27 +121,27 @@ function addSign(sign, attributes, lineNumber, iAlternative, iSign)
 	{
 		switch (attributes['position'])
 		{
-			case 'aboveLine':
+			case 'ABOVE_LINE':
 			{
 				span.html('<sup>' + span.html() + '</sup>');
 				destination = $('#regularLinePart' + lineNumber);
 			}
 			break;
 			
-			case 'belowLine':
+			case 'BELOW_LINE':
 			{
 				span.html('<sub>' + span.html() + '</sub>');
 				destination = $('#regularLinePart' + lineNumber);
 			}
 			break;
 			
-			case 'leftMargin':
+			case 'LEFT_MARGIN':
 			{
 				destination = $('#leftMargin' + lineNumber);
 			}
 			break;
 			
-			case 'rightMargin':
+			case 'RIGHT_MARGIN':
 			{
 				destination = $('#rightMargin' + lineNumber);
 			}
@@ -140,24 +151,24 @@ function addSign(sign, attributes, lineNumber, iAlternative, iSign)
 	span.appendTo(destination);
 	
 	
-	if ((attributes['retraced']) == 'true') // 6.2
+	if ((attributes['retraced']) == 1) // 6.2
 	{
 		classList.push('retraced');
 	}
 	
 	if ((attributes['damaged']) != null) // 9
 	{
-		if ((attributes['damaged']) == 'ambiguous')
+		if ((attributes['damaged']) == 'INCOMPLETE_AND_NOT_CLEAR')
 		{
 			span.text(span.text() + '\u05af');
 		}
-		else if ((attributes['damaged']) == 'clear')
+		else if ((attributes['damaged']) == 'INCOMPLETE_BUT_CLEAR')
 		{
 			span.text(span.text() + '\u05c4');
 		}
 	}
 	
-	if ((attributes['reconstructed']) == 'true') // 10
+	if ((attributes['reconstructed']) == 1) // 10
 	{
 		classList.push('reconstructed');
 	}
@@ -184,14 +195,14 @@ function addSign(sign, attributes, lineNumber, iAlternative, iSign)
 	
 	span.dblclick(function(event)
 	{
-		$('#wysiwygContainer').appendTo('#hidePanel');
-		$('#singleSignContainer').appendTo('#WysiwygPanel');
+		$('#richTextContainer').appendTo('#hidePanel');
+		$('#singleSignContainer').appendTo('#richTextPanel');
 		
-		displaySingleSignSpan(event.target['id'], _model);
+		displaySingleSignSpan(event.target['id'], Spider.textObject);
 	});
 }
 
-function displayModel()
+function displayModel(model)
 {
 	var sign;
 	var attributes;
@@ -199,34 +210,34 @@ function displayModel()
 	
 	var highestLineIndex = 0;
 	
-	for (var iAlternative in _model)
+	for (var iAlternative in model)
 	{
-		for (var iSign in _model[iAlternative]) // TODO dont display alternatives in a row
+		for (var iSign in model[iAlternative]) // TODO dont display alternatives in a row
 		{
-			sign = _model[iAlternative][iSign]['sign'];
+			sign = model[iAlternative][iSign]['sign'];
 			if (sign == null)
 			{
 				sign = '?';
 			}
 			
 			attributes = {};
-			for (var a in _model[iAlternative][iSign])
+			for (var a in model[iAlternative][iSign])
 			{
 				if (a != 'sign'
 				&&  a != 'line')
 				{
-					attributes[a] = _model[iAlternative][iSign][a];
+					attributes[a] = model[iAlternative][iSign][a];
 				}
 			}
 			
-			lineNumber = _model[iAlternative][iSign]['line'];
+			lineNumber = model[iAlternative][iSign]['line'];
 			if (lineNumber == null)
 			{
 				lineNumber = 1;
 			}
 			while (lineNumber > highestLineIndex)
 			{
-				addWysiwygLine(highestLineIndex + 1);
+				addTextLine(highestLineIndex + 1);
 				highestLineIndex++;
 			}
 
@@ -242,54 +253,49 @@ function displayModel()
 	}
 }
 
+function displayModel2(model)
+{
+	$('#richTextContainer').empty();
+	
+	// TODO add fragment name?
+	
+	for (var iLine in model)
+	{
+		addTextLine(model[iLine]['lineName']);
+		
+		for (var iAlternative in model[iLine]['signs'])
+		{
+			var a = model[iLine]['signs'][iAlternative];
+			
+			for (var iSign in a)
+			{
+				addSign
+				(
+					a[iSign]['sign'],
+					a[iSign],
+					model[iLine]['lineName'],
+					iAlternative,
+					iSign
+				);
+			}
+		}
+	}
+}
+
 // TODO add context menus based on example of fragmentPuzzle.js
 
-var _model;
 var _signType2Visualisation;
 
-function initWysiwygEditor()
+function initRichTextEditor()
 {
-	$('#wysiwygContainer').empty(); // TODO move it into displayModel(), with addFragmentName() afterwards
-	
-	addFragmentName('Frag. 3');
-	
-	const json = // TODO remove line layer in general, cover it by attribute
-	'[' +
-	'[{"sign": "ע", "width": 1, "line": 1}],' +
-	'[{"sign": "ך", "width": 1, "position": "leftMargin", "line": 1}],' +
-	'[{"sign": "ט", "width": 1, "line": 2, "comment": "i am pretty sure"}],' +
-	'[{"signType": "vacat", "width": 3.9, "line": 3}],' +
-	'[{"signType": "damage", "width": 4, "line": 4}],' +
-	'[{"sign": "ט", "width": 1, "line": 4, "position": "aboveLine"}],' +
-	'[{"sign": "ט", "width": 1, "line": 4, "position": "belowLine"}],' +
-	'[{"sign": "ם", "width": 1, "line": 5, "reconstructed": "true", "retraced": "true"}],' +
-	'[{"sign": "ט", "width": 1, "line": 5, "damaged": "ambiguous"}],' +
-	'[{"sign": "ט", "width": 1, "line": 5, "damaged": "clear"}],' +
-	'[{"sign": "ט", "width": 1, "line": 5, "corrected": "overwritten"}],' +
-	'[{"sign": "ט", "width": 1, "line": 5, "position": "leftMargin"}],' +
-	'[{"sign": "ט", "width": 1, "line": 5, "position": "leftMargin", "suggested": "true", "comment": "i am pretty sure"}]' +
-	']';
-	
-	_model = JSON.parse
-	(
-		json.replace(/\n/g, '\\n')
-	);
-	
 	_signType2Visualisation =
 	{
 		'space':			' ',
-		'possibleVacat':	'.',
+		'possible vacat':	'.',
 		'vacat':			'_',
 		'damage':			'#',
-		'blankLine':		'¬',
-		'paragraphMarker':	'¶',
+		'blank line':		'¬',
+		'paragraph marker':	'¶',
 		'lacuna':			'?'
 	}
-	
-	displayModel();
-
-	
-
-
-
 }
