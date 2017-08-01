@@ -60,7 +60,7 @@ Spider.prototype.notifyChangedText = function(textObject)
 {
 	this.textObject = textObject;
 	
-	displayModel2(textObject);
+	displayModel(textObject);
 }
 
 var Spider = new Spider();
